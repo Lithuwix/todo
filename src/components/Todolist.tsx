@@ -1,5 +1,4 @@
-import React, {ChangeEvent} from 'react';
-import {FilterValuesType} from '../App';
+import React from 'react';
 import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
 import IconButton from '@mui/material/IconButton';
@@ -7,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import {FilterValuesType} from "./../AppRedux";
 
 export type TaskType = {
     taskId: string
@@ -18,34 +18,35 @@ type PropsType = {
     todoId: string
     title: string
     tasks: Array<TaskType>
-    removeTask: (todolistId: string, taskId: string) => void
-    changeFilter: (value: FilterValuesType, todolistId: string) => void
-    addTask: (title: string, todolistId: string) => void
-    changeTaskStatus: (id: string, isDone: boolean, todolistId: string) => void
-    removeTodolist: (id: string) => void
-    changeTodolistTitle: (id: string, newTitle: string) => void
+    deleteTask: (todolistId: string, taskId: string) => void
+    changeTodoFilter: (todolistId: string, newTodoFilterValue: FilterValuesType) => void
+    addTask: (todoId: string, newTaskTitle: string) => void
+    changeTaskStatus: (todoId: string, taskId: string) => void
+    deleteTodo: (todoId: string) => void
+    changeTodoTitle: (todoId: string, newTitle: string) => void
     filter: FilterValuesType
-    changeTaskTitle: (taskId: string, newTitle: string, todolistId: string) => void
+    changeTaskTitle: (todoId: string, taskId: string, newTaskTitle: string) => void
 }
 
 export function Todolist(props: PropsType) {
-    const addTask = (title: string) => {
-        props.addTask(title, props.todoId);
+    const addTask = (taskTitle: string) => {
+        props.addTask(props.todoId, taskTitle);
     }
     const removeTodolist = () => {
-        props.removeTodolist(props.todoId);
+        props.deleteTodo(props.todoId);
     }
-    const changeTodolistTitle = (title: string) => {
-        props.changeTodolistTitle(props.todoId, title);
+    const changeTodoTitle = (title: string) => {
+        props.changeTodoTitle(props.todoId, title);
     }
 
-    const onAllClickHandler = () => props.changeFilter("all", props.todoId);
-    const onActiveClickHandler = () => props.changeFilter("active", props.todoId);
-    const onCompletedClickHandler = () => props.changeFilter("completed", props.todoId);
+    const onAllClickHandler = () => props.changeTodoFilter(props.todoId, "all");
+    const onActiveClickHandler = () => props.changeTodoFilter(props.todoId, "active");
+    const onCompletedClickHandler = () => props.changeTodoFilter(props.todoId, "completed");
 
     return (
         <div>
-            <h3><EditableSpan value={props.title} onChange={changeTodolistTitle}/>
+            <h3>
+                <EditableSpan value={props.title} onChange={changeTodoTitle}/>
                 <IconButton onClick={removeTodolist}>
                     <DeleteIcon fontSize="small"/>
                 </IconButton>
@@ -54,13 +55,12 @@ export function Todolist(props: PropsType) {
             <ul>
                 {
                     props.tasks.map(task => {
-                        const onClickHandler = () => props.removeTask(props.todoId, task.taskId)
-                        const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                            let newIsDoneValue = e.currentTarget.checked;
-                            props.changeTaskStatus(task.taskId, newIsDoneValue, props.todoId);
+                        const onClickHandler = () => props.deleteTask(props.todoId, task.taskId)
+                        const onChangeHandler = () => {
+                            props.changeTaskStatus(props.todoId, task.taskId);
                         }
                         const onTitleChangeHandler = (newValue: string) => {
-                            props.changeTaskTitle(task.taskId, newValue, props.todoId);
+                            props.changeTaskTitle(props.todoId, task.taskId, newValue);
                         }
                         return <li key={task.taskId} className={task.isDone ? "is-done" : ""}>
                             <FormControlLabel
