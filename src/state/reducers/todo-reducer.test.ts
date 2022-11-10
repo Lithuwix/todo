@@ -10,6 +10,7 @@ let startState: Array<TodoListType>
 beforeEach(() => {
     todolistId1 = v1()
     todolistId2 = v1()
+    //
 
     startState = [
         {todoId: todolistId1, title: 'What to learn', filter: 'all'},
