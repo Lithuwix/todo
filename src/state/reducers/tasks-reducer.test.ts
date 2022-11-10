@@ -1,5 +1,5 @@
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC, tasksReducer} from './tasks-reducer'
-import {TasksStateType, TodoListType} from "../../components/AppReducers";
+import {TasksStateType, TodoListType} from "../../components/__AppReducers";
 import {createTodoAC, deleteTodoAC, todoReducer} from "./todo-reducer";
 
 let startState: TasksStateType

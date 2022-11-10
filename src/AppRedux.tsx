@@ -1,7 +1,10 @@
 import React from 'react';
 import './App.css';
+
 import {TaskType, Todolist} from './components/Todolist';
+
 import {AddItemForm} from "./components/AddItemForm";
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,9 +14,10 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
+
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
+
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC} from "./state/reducers/tasks-reducer";
 import {changeTodoFilterAC, changeTodoTitleAC, createTodoAC, deleteTodoAC} from "./state/reducers/todo-reducer";
 
@@ -81,6 +85,7 @@ export const AppWithRedux = () => {
                     <Grid container spacing={3}>
                         {
                             todoLists.map((tl, index) => {
+
                                 let allTodolistTasks = tasks[tl.todoId];
                                 let tasksForTodolist = allTodolistTasks;
 
@@ -92,24 +97,20 @@ export const AppWithRedux = () => {
                                 }
 
                                 return (
-                                    <Grid item key={index}>
-                                        <Paper style={{padding: '10px'}}>
-                                            <Todolist
-                                                key={tl.todoId}
-                                                todoId={tl.todoId}
-                                                title={tl.title}
-                                                tasks={tasksForTodolist}
-                                                deleteTask={deleteTask}
-                                                changeTodoFilter={changeTodoFilter}
-                                                addTask={addTask}
-                                                changeTaskStatus={changeTaskStatus}
-                                                filter={tl.filter}
-                                                deleteTodo={deleteTodo}
-                                                changeTaskTitle={changeTaskTitle}
-                                                changeTodoTitle={changeTodoTitle}
-                                            />
-                                        </Paper>
-                                    </Grid>
+                                    <Todolist
+                                        key={tl.todoId}
+                                        todoId={tl.todoId}
+                                        title={tl.title}
+                                        tasks={tasksForTodolist}
+                                        deleteTask={deleteTask}
+                                        changeTodoFilter={changeTodoFilter}
+                                        addTask={addTask}
+                                        changeTaskStatus={changeTaskStatus}
+                                        filter={tl.filter}
+                                        deleteTodo={deleteTodo}
+                                        changeTaskTitle={changeTaskTitle}
+                                        changeTodoTitle={changeTodoTitle}
+                                    />
                                 )
                             })
                         }

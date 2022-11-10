@@ -1,24 +1,7 @@
-/*.AppReducers.tsx {*/
-/*  padding: 30px;*/
-/*  display: flex;*/
-/*}*/
-
-/*.AppReducers.tsx > div {*/
-/*  margin-right: 50px;*/
-/*}*/
-
-/*.error {*/
-/*  border: red 1px solid;*/
-/*}*/
-
 .error-message {
   margin-top: 5px;
   color: #b20000;
 }
-
-/*.active-filter {*/
-/*  background-color: aquamarine;*/
-/*}*/
 
 .is-done {
   opacity: 0.5;
